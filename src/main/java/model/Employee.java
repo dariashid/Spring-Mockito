@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import java.util.Objects;
 
@@ -52,7 +52,7 @@ public class Employee {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Model.Employee employee = (Model.Employee) o;
+        model.Employee employee = (model.Employee) o;
         return Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName);
     }
 

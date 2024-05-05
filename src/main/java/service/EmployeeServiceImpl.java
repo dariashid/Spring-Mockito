@@ -1,6 +1,6 @@
 package service;
 
-import Model.Employee;
+import model.Employee;
 import exception.EmployeeAlreadyAddedException;
 import exception.EmployeeNotFoundException;
 import exception.InvalidInputException;

@@ -1,18 +1,16 @@
 package com.pro.sky.employeesaccounting.service;
 
-import Model.Employee;
+import model.Employee;
 import exception.EmployeeAlreadyAddedException;
 import exception.EmployeeNotFoundException;
 import exception.InvalidInputException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import service.EmployeeService;
 import service.EmployeeServiceImpl;
 
 import java.util.Collection;
-import java.util.regex.Matcher;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
