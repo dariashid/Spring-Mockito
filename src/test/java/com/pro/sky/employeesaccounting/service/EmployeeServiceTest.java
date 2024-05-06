@@ -25,7 +25,7 @@ public class EmployeeServiceTest {
 
         assertEquals("Вячеслав", employee.getFirstName());
         assertEquals("Смирнов", employee.getLastName());
-        assertEquals(1000, employee.getSalary());
+        assertEquals(70000, employee.getSalary());
         assertEquals(service.findEmployee("Вячеслав", "Смирнов"), employee);
     }
 
@@ -49,7 +49,7 @@ public class EmployeeServiceTest {
         Employee employee = service.findEmployee("Вячеслав", "Смирнов");
         assertEquals("Вячеслав", employee.getFirstName());
         assertEquals("Смирнов", employee.getLastName());
-        assertEquals(1000, employee.getSalary());
+        assertEquals(70000, employee.getSalary());
 
     }
 
