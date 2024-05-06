@@ -2,7 +2,7 @@ package com.pro.sky.employeesaccounting.service;
 
 import model.Employee;
 import exception.EmployeeNotFoundException;
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -10,11 +10,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import service.DepartmentService;
 import service.EmployeeService;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,22 +37,23 @@ public class DepartmentServiceTest {
 
         Optional<Employee> employee = departmentService.findEmployeeMaxSalaryByDepartment(2);
 
-        assertEquals("Вячеслав", employee.getFirstName());
-        assertEquals("Смирнов", employee.getLastName());
+        assertEquals("Вячеслав", employee.get().getFirstName());
+        assertEquals( "Смирнов", employee.get().getLastName());
     }
 
     @Test
     public void shouldReturnEmployeeWithMinSalary() {
         when(employeeService.findAllEmployees()).thenReturn(employees);
 
-        Optional<Employee> employee = departmentService.findEmployeeMaxSalaryByDepartment(2);
+        Optional<Employee> employee = departmentService.findEmployeeMinSalaryByDepartment(1);
 
-        assertEquals("Вячеслав", employee.getFirstName());
-        assertEquals("Смирнов", employee.getLastName());
+        assertEquals( "Вячеслав", employee.get().getFirstName());
+        assertEquals("Смирнов", employee.get().getLastName());
+
     }
 
     @Test
-    public void shouldReturnAllEmployeeGroupeByDepartment() {
+    public void shouldReturnAllEmployeeGroupByDepartment() {
         when(employeeService.findAllEmployees()).thenReturn(employees);
         Map<Integer, List<Employee>> result = departmentService.allEmployeesByDepartment();
 
@@ -68,6 +69,7 @@ public class DepartmentServiceTest {
     public void shouldThrowException() {
         when(employeeService.findAllEmployees()).thenReturn(new ArrayList<>());
         assertThrows(EmployeeNotFoundException.class, () -> departmentService.findEmployeeMaxSalaryByDepartment(1));
+
 
     }
 }
