@@ -1,22 +1,22 @@
 package com.pro.sky.employeesaccounting.service;
 
-import model.Employee;
 import exception.EmployeeAlreadyAddedException;
 import exception.EmployeeNotFoundException;
 import exception.InvalidInputException;
+import model.Employee;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import service.EmployeeService;
 import service.EmployeeServiceImpl;
-
 import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class EmployeeServiceTest {
-    private EmployeeService service = new EmployeeServiceImpl();
+
+    private final EmployeeService service = new EmployeeServiceImpl();
 
     @Test
     public void shouldAddEmployee() {
@@ -31,8 +31,7 @@ public class EmployeeServiceTest {
 
     @Test
     public void shouldThrowExceptionWhenNameIsNotNumeric() {
-        assertThrows(InvalidInputException.class, () -> service.add("Вячеслав", "Смирнов", 70000));
-        assertThrows(InvalidInputException.class, () -> service.add("Вячеслав", "Смирнов", 70000));
+        assertThrows(InvalidInputException.class, () -> service.add("1", "Смирнов", 70000));
     }
 
     @Test
@@ -79,10 +78,8 @@ public class EmployeeServiceTest {
         Employee addedEmployee = service.add("Вячеслав", "Смирнов", 70000);
         Collection<Employee> employees = service.findAllEmployees();
         assertEquals(1, employees.size());
-        assertEquals(addedEmployee, employees.stream().findFirst().get());
 
         MatcherAssert.assertThat(employees, Matchers.containsInAnyOrder(addedEmployee));
 
     }
-
 }
