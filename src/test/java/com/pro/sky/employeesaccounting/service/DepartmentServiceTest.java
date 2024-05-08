@@ -61,6 +61,7 @@ public class DepartmentServiceTest {
         assertEquals(2, result.get(1).size());
         Assertions.assertThat(result.get(1)).hasSize(2).contains(employees.get(0), employees.get(1));
         Assertions.assertThat(result.get(2)).hasSize(1).contains(employees.get(2));
+
     }
 }
 

@@ -9,6 +9,8 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import service.EmployeeService;
 import service.EmployeeServiceImpl;
+
+import javax.naming.InvalidNameException;
 import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,7 +23,7 @@ public class EmployeeServiceTest {
     @Test
     public void shouldAddEmployee() {
 
-        Employee employee = service.add("Вячеслав", "Смирнов", 70000);
+        Employee employee = service.addEmployee("Вячеслав", "Смирнов", 70000, 1);
 
         assertEquals("Вячеслав", employee.getFirstName());
         assertEquals("Смирнов", employee.getLastName());
@@ -30,20 +32,8 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenNameIsNotNumeric() {
-        assertThrows(InvalidInputException.class, () -> service.add("1", "Смирнов", 70000));
-    }
-
-    @Test
-    public void shouldThrowExceptionWhenAddingExistingEmployee() {
-        service.add("Вячеслав", "Смирнов", 70000);
-        assertThrows(EmployeeAlreadyAddedException.class, () -> service.add("Вячеслав", "Смирнов", 70000));
-
-    }
-
-    @Test
     public void shouldFindEmployee() {
-        service.add("Вячеслав", "Смирнов", 70000);
+        service.addEmployee("Вячеслав", "Смирнов", 70000,1);
 
         Employee employee = service.findEmployee("Вячеслав", "Смирнов");
         assertEquals("Вячеслав", employee.getFirstName());
@@ -53,15 +43,8 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenEmployeeNotExists() {
-
-        assertThrows(EmployeeNotFoundException.class, () -> service.findEmployee("Вячеслав", "Смирнов"));
-
-    }
-
-    @Test
     public void shouldRemoveEmployee() {
-        service.add("Вячеслав", "Смирнов", 70000);
+        service.addEmployee("Вячеслав", "Смирнов", 70000, 1);
         service.removeEmployee("Вячеслав", "Смирнов");
 
         assertThrows(EmployeeNotFoundException.class, () -> service.findEmployee("Вячеслав", "Смирнов"));
@@ -70,16 +53,34 @@ public class EmployeeServiceTest {
 
     @Test
     public void shouldThrowExceptionDeletingNotExistingEmployee() {
-        assertThrows(EmployeeNotFoundException.class, () -> service.removeEmployee("Вячеслав", "Смирнов"));
+        assertThrows(EmployeeNotFoundException.class, () -> service.findEmployee("Вячеслав", "Смирнов"));
     }
 
     @Test
     public void shouldReturnAllEmployees() {
-        Employee addedEmployee = service.add("Вячеслав", "Смирнов", 70000);
+        Employee addedEmployee = service.addEmployee("Вячеслав", "Смирнов", 70000, 1);
         Collection<Employee> employees = service.findAllEmployees();
         assertEquals(1, employees.size());
 
         MatcherAssert.assertThat(employees, Matchers.containsInAnyOrder(addedEmployee));
+
+    }
+    @Test
+    public void shouldThrowExceptionWhenAddingExistingEmployee() {
+        service.addEmployee("Вячеслав", "Смирнов", 70000,1);
+        assertThrows(EmployeeAlreadyAddedException.class, () -> service.addEmployee("Вячеслав", "Смирнов",70000, 1));
+        assertThrows(EmployeeAlreadyAddedException.class, () -> service.addEmployee("Вячеслав", "Смирнов", 7000, 1));
+    }
+    @Test
+    public void shouldThrowExceptionWhenNameIsNotNumeric() {
+
+        assertThrows(InvalidInputException.class, () -> service.findEmployee("1", "Смирнов"));
+
+    }
+    @Test
+    public void shouldThrowExceptionWhenEmployeeNotExists() {
+
+        assertThrows(EmployeeNotFoundException.class, () -> service.findEmployee("Вячеслав", "Смирнов"));
 
     }
 }
